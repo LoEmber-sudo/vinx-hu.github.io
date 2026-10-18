@@ -1,0 +1,9 @@
+# Apache hosts only. Netlify/Vercel/GitHub Pages: enable "Force HTTPS" in dashboard instead.
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+ErrorDocument 404 /404.html
+
+Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+Header always set X-Content-Type-Options "nosniff"

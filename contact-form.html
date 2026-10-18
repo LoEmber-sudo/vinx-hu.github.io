@@ -1,0 +1,30 @@
+<!-- vinx.hu contact form: paste where you want the form. Self-contained (own styles, validation, spam trap).
+     Replace the action URL with your form service (Formspree, Web3Forms, Netlify Forms...). -->
+<style>
+#vx-form{max-width:560px;font:17px/1.6 "PT Serif",Georgia,serif;color:#3a2a25}
+#vx-form label{display:block;margin:1rem 0 .3rem}
+#vx-form input,#vx-form textarea{width:100%;padding:.8rem 1rem;border:1px solid #b09a82;border-radius:8px;background:#f7f3ee;color:#3a2a25;font:inherit}
+#vx-form input:focus-visible,#vx-form textarea:focus-visible,#vx-form button:focus-visible{outline:3px solid #8a5a3c;outline-offset:2px}
+#vx-form button{margin-top:1.2rem;background:#2e2623;color:#fff;border:0;border-radius:999px;padding:.8rem 2.2rem;font:inherit;cursor:pointer}
+#vx-form button:hover{background:#4a3a33}
+#vx-error{color:#8a1c1c;min-height:1.4em;margin:.8rem 0 0}
+</style>
+<form id="vx-form" action="https://formspree.io/f/YOUR_ID" method="POST" novalidate>
+  <label for="vx-name">Name</label>
+  <input id="vx-name" name="name" type="text" required minlength="2" autocomplete="name">
+  <label for="vx-email">Email</label>
+  <input id="vx-email" name="email" type="email" required autocomplete="email">
+  <label for="vx-msg">Tell me about your project</label>
+  <textarea id="vx-msg" name="message" rows="5" required minlength="10"></textarea>
+  <div style="position:absolute;left:-9999px" aria-hidden="true"><label>Leave empty <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
+  <p id="vx-error" role="alert"></p>
+  <button type="submit">Send message</button>
+</form>
+<script>
+document.getElementById('vx-form').addEventListener('submit',function(e){
+  var f=e.target,err=document.getElementById('vx-error');err.textContent='';
+  if(f._gotcha.value){e.preventDefault();return}
+  if(!f.checkValidity()){e.preventDefault();var b=f.querySelector(':invalid');
+    err.textContent={name:'Please enter your name.',email:'Please enter a valid email address.',message:'Please write at least 10 characters.'}[b.name]||'Please check the form.';b.focus()}
+});
+</script>

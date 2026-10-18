@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found | vinx.hu</title><meta name="description" content="Page not found.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<style>:root{--bg:#e8ddd0;--bg2:#e1d4c4;--ph:#cdbba6;--ink:#3a2a25;--btn:#2e2623;--head:'Marcellus','Optima','Palatino Linotype',serif;--body:'PT Serif',Georgia,serif}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.7 var(--body)}
+h1,h2,h3{font-family:var(--head);font-weight:400;line-height:1.15;margin:0 0 1rem}
+h1{font-size:clamp(2.4rem,6vw,4.5rem)}h2{font-size:clamp(2rem,4.5vw,3.2rem)}h3{font-size:1.6rem}
+a{color:inherit}img{max-width:100%;display:block}
+a:focus-visible,button:focus-visible{outline:3px solid #8a5a3c;outline-offset:3px}
+.wrap{max-width:1200px;margin:0 auto;padding:0 clamp(1rem,4vw,3rem)}
+section{padding:clamp(3rem,8vw,6rem) 0}
+.btn{display:inline-block;background:var(--btn);color:#fff;border:0;border-radius:999px;padding:.8rem 2rem;font:inherit;font-size:1rem;text-decoration:none;cursor:pointer;text-align:center}
+.btn:hover{background:#4a3a33}.btn.block{display:block;width:100%}.btn.sm{padding:.5rem 1.2rem;border-radius:6px;font-size:.9rem}
+.ph{background:var(--ph);position:relative;overflow:hidden}.ph img{width:100%;height:100%;object-fit:cover}
+/* header */
+header{position:sticky;top:0;z-index:50;background:var(--bg2);box-shadow:0 2px 8px rgba(58,42,37,.12)}
+.bar{display:flex;align-items:center;justify-content:space-between;height:72px}
+.logo{text-decoration:none;font-family:var(--head);font-size:1.3rem;flex:1}
+nav.main{display:flex;gap:2rem}
+nav.main a{text-decoration:none;padding:.2rem 0}nav.main a:hover,nav.main a.cur{border-bottom:1px solid var(--ink)}
+.right{flex:1;display:flex;justify-content:flex-end;align-items:center;gap:1.5rem}
+.right .cart{text-decoration:none}
+.burger{display:none;background:none;border:0;width:40px;height:40px;cursor:pointer;position:relative}
+.burger span{position:absolute;left:8px;right:8px;height:2px;background:var(--ink);transition:.2s}
+.burger span:nth-child(1){top:14px}.burger span:nth-child(2){top:24px}
+.burger[aria-expanded=true] span:nth-child(1){top:19px;transform:rotate(45deg)}
+.burger[aria-expanded=true] span:nth-child(2){top:19px;transform:rotate(-45deg)}
+.mmenu{display:none}
+/* hero */
+.hero{padding:1.5rem 0 0}.hero .ph{height:min(72vh,680px);border-radius:2px;background:linear-gradient(160deg,#5a4a3e,#2e2623)}
+.hero h1{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:#fff;margin:0;padding:1rem;text-shadow:0 2px 18px rgba(0,0,0,.45);z-index:2}
+.hero .ph::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.12);z-index:1}
+/* split */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,6vw,5rem);align-items:center}
+.split .ph{aspect-ratio:4/5}.split p{margin:0 0 1rem}
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2rem}
+.card .ph{aspect-ratio:4/5;margin-bottom:1rem}.card h3{margin-bottom:.3rem}.card .price{margin:0 0 .6rem}
+.card p{font-size:.98rem}.note{font-style:italic;font-weight:700;font-size:.95rem}
+.soon{display:grid;place-items:center;background:#1b1715;color:#fff;font-family:var(--head);text-align:center;aspect-ratio:4/5;margin-bottom:1rem}
+.rows .row{display:grid;grid-template-columns:200px 220px 1fr;gap:2rem;align-items:center;padding:1.5rem 0}
+.rows .ph,.rows .soon{aspect-ratio:1;margin:0}.rows .row p{margin:0 0 .8rem}
+.shopbar{display:flex;gap:1rem;align-items:center;margin-top:2.5rem}
+.qty{display:flex;gap:.6rem;align-items:center;margin-top:.6rem}
+/* contact panel */
+.panel{background:#f7f3ee;padding:2.5rem;border-radius:4px}.panel h3{margin-bottom:1.2rem}
+.panel p{margin:0 0 1rem}.panel a{font-size:1.15rem}
+/* follow */
+.follow{text-align:center}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin:2rem 0}.grid4 .ph{aspect-ratio:1}
+.center{text-align:center}
+/* footer */
+footer{background:#b09a82;color:#2a1f1b;padding:3rem 0 2rem}
+.foot{display:flex;justify-content:space-between;gap:2rem;flex-wrap:wrap}
+.foot h2{font-size:2rem}.foot p{margin:0 0 .3rem;font-size:1.15rem}.foot .legal{width:100%;font-size:.85rem;margin-top:2rem}
+@media(max-width:800px){
+ body{font-size:17px}nav.main,.right .book,.right .word{display:none}
+ .burger{display:block}.right{gap:.5rem}
+ .mmenu{position:fixed;inset:72px 0 0;background:var(--bg2);z-index:49;flex-direction:column;align-items:center;justify-content:center;gap:1.6rem;font-size:1.7rem;display:none}
+ .mmenu.open{display:flex}.mmenu a{text-decoration:none}.mmenu .btn{font-size:1rem;margin-top:1.5rem}
+ .split,.rows .row{grid-template-columns:1fr}.split.rev .ph{order:2}
+ .hero .ph{height:78vh}.grid4{grid-template-columns:1fr 1fr}.rows .row{gap:1rem}.rows .ph,.rows .soon{max-width:280px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+.legal-page{max-width:760px;margin:0 auto;padding:clamp(2.5rem,7vw,5rem) clamp(1rem,4vw,2rem)}
+.legal-page h1{font-size:clamp(2.2rem,5vw,3.4rem)}.legal-page h2{font-size:1.5rem;margin:2rem 0 .6rem}
+.legal-page li{margin-bottom:.4rem}.legal-page a{text-underline-offset:3px}
+.nf{min-height:62vh;display:grid;place-items:center;text-align:center;padding:3rem 1rem}
+.nf h1{font-size:clamp(4rem,14vw,8rem);margin:0}.nf p{margin:0 0 1.8rem;font-size:1.2rem}
+</style></head><body>
+<header><div class="wrap bar"><a class="logo" href="index.html">vinx.hu</a>
+<nav class="main" aria-label="Main"><a href="about.html">About</a><a href="services.html">Services</a><a href="#contact">Contact</a><a href="shop.html">Shop</a></nav>
+<div class="right"><a class="cart" href="shop.html"><span class="word">Cart </span><span id="cc">(0)</span></a><a class="btn book" href="#contact">Book now</a>
+<button class="burger" aria-expanded="false" aria-label="Open menu"><span></span><span></span></button></div></div>
+<div class="mmenu"><a href="about.html">About</a><a href="services.html">Services</a><a href="#contact">Contact</a><a href="shop.html">Shop</a><a class="btn" href="#contact">Book now</a></div></header>
+<main><div class="nf"><div><h1>404</h1><p>This page doesn’t exist or has moved.</p><a class="btn" href="index.html">Back to home</a></div></div></main>
+<footer id="contact"><div class="wrap foot"><h2>Contact Me</h2>
+<div><p><a href="mailto:vinx.hu.contact@gmail.com">vinx.hu.contact@gmail.com</a></p><p>Instagram: <a href="https://www.instagram.com/vinx.hu/" rel="noopener">@vinx.hu</a></p><p><a href="tel:+36306560542">+36 30 656 0542</a></p></div>
+<p class="legal"><a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms &amp; Conditions</a> · © 2026 vinx.hu</p></div></footer>
+<script>
+(function(){var b=document.querySelector('.burger'),m=document.querySelector('.mmenu');
+function s(o){b.setAttribute('aria-expanded',o);b.setAttribute('aria-label',o?'Close menu':'Open menu');m.classList.toggle('open',o);document.body.style.overflow=o?'hidden':''}
+b.onclick=function(){s(b.getAttribute('aria-expanded')!=='true')};m.onclick=function(e){if(e.target.tagName==='A')s(false)};
+document.addEventListener('keydown',function(e){if(e.key==='Escape')s(false)});
+var n=0;try{n=+localStorage.getItem('cart')||0}catch(e){}document.getElementById('cc').textContent='('+n+')';})();
+</script><script src="cookie-banner.js" defer></script></body></html>
