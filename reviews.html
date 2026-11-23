@@ -56,89 +56,121 @@
   .star-input input:focus-visible + label { outline: 2px solid #4a90e2; }
 </style>
 
-<script>
-  // ---- CONFIG: fill these in from Supabase > Project Settings > API ----
-  const SUPABASE_URL = 'https://oiogzpohmshlnphxtarp.supabase.co';
-  const SUPABASE_KEY = 'sb_publishable_dtiBBnFM-s4qyESbr1rkSQ_xLv6AZWr';
+<script type="module">
+import { createClient } from 'https://esm.sh/@neondatabase/neon-js';
 
-  const API = SUPABASE_URL + '/rest/v1/reviews';
-  const headers = { apikey: SUPABASE_KEY, 'Content-Type': 'application/json' };
+const neon = createClient({
+  auth: {
+    url: 'https://ep-cool-frog-bhp7kdp8.neonauth.c-10.eu-central-1.aws.neon.tech/neondb/auth',
+    allowAnonymous: true
+  },
+  dataApi: {
+    url: 'https://ep-cool-frog-bhp7kdp8.apirest.c-10.eu-central-1.aws.neon.tech/neondb/rest/v1'
+  }
+});
 
-  const listEl = document.getElementById('reviews-list');
-  const summaryEl = document.getElementById('reviews-summary');
-  const statusEl = document.getElementById('review-status');
+const listEl = document.getElementById('reviews-list');
+const summaryEl = document.getElementById('reviews-summary');
+const statusEl = document.getElementById('review-status');
+const form = document.getElementById('review-form');
 
-  const stars = n => '★'.repeat(n) + '☆'.repeat(5 - n);
+const stars = n => '★'.repeat(n) + '☆'.repeat(5 - n);
 
-  async function loadReviews() {
-    try {
-      const res = await fetch(
-        API + '?select=name,rating,message,created_at&approved=eq.true&order=created_at.desc&limit=50',
-        { headers }
-      );
-      if (!res.ok) throw new Error(res.status);
-      const reviews = await res.json();
+async function loadReviews() {
+  try {
+    const { data: reviews, error } = await neon
+      .from('reviews')
+      .select('name,rating,message,created_at')
+      .eq('approved', true)
+      .order('created_at', { ascending: false })
+      .limit(50);
 
-      listEl.textContent = '';
-      if (!reviews.length) {
-        listEl.textContent = 'No reviews yet. Be the first!';
-        summaryEl.textContent = '';
-        return;
-      }
+    if (error) throw error;
 
-      const avg = reviews.reduce((s, r) => s + r.rating, 0) / reviews.length;
-      summaryEl.innerHTML = '';
-      const avgStars = document.createElement('span');
-      avgStars.className = 'stars';
-      avgStars.textContent = stars(Math.round(avg));
-      summaryEl.append(avgStars, ' ' + avg.toFixed(1) + ' / 5 (' + reviews.length + ' reviews)');
+    listEl.textContent = '';
 
-      for (const r of reviews) {
-        const item = document.createElement('div');
-        item.className = 'review-item';
-
-        const meta = document.createElement('div');
-        meta.className = 'meta';
-        const s = document.createElement('span');
-        s.className = 'stars';
-        s.textContent = stars(r.rating);
-        meta.append(s, ' ' + r.name + ' · ' + new Date(r.created_at).toLocaleDateString());
-
-        const text = document.createElement('p');
-        text.textContent = r.message; // textContent => user text can never inject HTML
-
-        item.append(meta, text);
-        listEl.append(item);
-      }
-    } catch (e) {
-      listEl.textContent = 'Reviews could not be loaded right now.';
+    if (!reviews || reviews.length === 0) {
+      listEl.textContent = 'No reviews yet. Be the first!';
+      summaryEl.textContent = '';
+      return;
     }
+
+    const avg = reviews.reduce((s, r) => s + r.rating, 0) / reviews.length;
+
+    summaryEl.textContent =
+      stars(Math.round(avg)) + ' ' +
+      avg.toFixed(1) + ' / 5 (' + reviews.length + ' reviews)';
+
+    for (const r of reviews) {
+      const item = document.createElement('div');
+      item.className = 'review-item';
+
+      const meta = document.createElement('div');
+      meta.className = 'meta';
+
+      const rating = document.createElement('span');
+      rating.className = 'stars';
+      rating.textContent = stars(r.rating);
+
+      meta.append(
+        rating,
+        ' ' + r.name + ' · ' +
+        new Date(r.created_at).toLocaleDateString()
+      );
+
+      const message = document.createElement('p');
+      message.textContent = r.message;
+
+      item.append(meta, message);
+      listEl.append(item);
+    }
+  } catch (error) {
+    console.error('Could not load reviews:', error);
+    listEl.textContent = 'Reviews could not be loaded right now.';
+  }
+}
+
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+
+  const data = new FormData(form);
+  const name = data.get('name').trim();
+  const rating = Number(data.get('rating'));
+  const message = data.get('message').trim();
+
+  if (!name || !message || rating < 1 || rating > 5) {
+    statusEl.textContent = 'Please complete all fields.';
+    return;
   }
 
-  document.getElementById('review-form').addEventListener('submit', async e => {
-    e.preventDefault();
-    const form = e.target;
-    const data = new FormData(form);
-    statusEl.textContent = 'Sending…';
+  const button = form.querySelector('button[type="submit"]');
+  button.disabled = true;
+  statusEl.textContent = 'Sending…';
 
-    try {
-      const res = await fetch(API, {
-        method: 'POST',
-        headers: { ...headers, Prefer: 'return=minimal' },
-        body: JSON.stringify({
-          name: data.get('name').trim(),
-          rating: Number(data.get('rating')),
-          message: data.get('message').trim()
-        })
+  try {
+    const { error } = await neon
+      .from('reviews')
+      .insert({
+        name,
+        rating,
+        message,
+        approved: false
       });
-      if (!res.ok) throw new Error(res.status);
-      form.reset();
-      statusEl.textContent = 'Thank you! Your review will appear once it has been approved.';
-    } catch (err) {
-      statusEl.textContent = 'Sorry, something went wrong. Please try again later.';
-    }
-  });
 
-  loadReviews();
+    if (error) throw error;
+
+    form.reset();
+    statusEl.textContent =
+      'Thank you! Your review will appear once it has been approved.';
+
+  } catch (error) {
+    console.error('Could not submit review:', error);
+    statusEl.textContent =
+      'Sorry, something went wrong. Please try again later.';
+  } finally {
+    button.disabled = false;
+  }
+});
+
+loadReviews();
 </script>
-<!-- ===== END REVIEWS SECTION ===== -->
